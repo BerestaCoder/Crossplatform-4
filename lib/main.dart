@@ -21,7 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final columnItems = List.generate(10, (index) => 'Предмет ${index + 1}');
   final listViewItems = List.generate(10, (index) => 'Предмет ${index + 1}');
-  final listViewSeperatedItems = List.generate(10, (index) => 'Предмет ${index + 1}');
+  final listViewSeparatedItems = List.generate(10, (index) => 'Предмет ${index + 1}');
 
   void _addItem() {
     setState(() {
@@ -31,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
         case 1:
           listViewItems.add('Добавленный предмет');
         case 2:
-          listViewSeperatedItems.add('Добавленный предмет');
+          listViewSeparatedItems.add('Добавленный предмет');
       }
     });
   }
@@ -47,10 +47,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   void _deleteListViewSeperatedItem(int index){
     setState(() {
-      listViewSeperatedItems.removeAt(index);
+      listViewSeparatedItems.removeAt(index);
     });
   }
-  
+
   @override  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -105,7 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
 
         // ================ ListView
-
         ListView(
             children: [
               for (int i = 0; i < listViewItems.length; i++)
@@ -126,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
           itemBuilder: (_, index) {
             return Card(
                 child: ListTile(
-                  title: Text(listViewSeperatedItems[index]),
+                  title: Text(listViewSeparatedItems[index]),
                   trailing: IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () => _deleteListViewSeperatedItem(index),
@@ -135,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
             );
           },
           separatorBuilder: (_, __) => const Divider(),
-          itemCount: listViewSeperatedItems.length,
+          itemCount: listViewSeparatedItems.length,
         ),
       ][currentPageIndex]
     );
