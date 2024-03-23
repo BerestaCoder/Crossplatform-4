@@ -36,6 +36,16 @@ class _MyHomePageState extends State<MyHomePage> {
       columnItems.removeAt(index);
     });
   }
+  void _deleteListViewItem(int index){
+    setState(() {
+      listViewItems.removeAt(index);
+    });
+  }
+  void _deleteListViewSeperatedItem(int index){
+    setState(() {
+      listViewSeperatedItems.removeAt(index);
+    });
+  }
 
   int currentPageIndex = 0;
 
@@ -95,24 +105,36 @@ class _MyHomePageState extends State<MyHomePage> {
         // ================ ListView
 
         ListView(
-            children: listViewItems.map((item) => GestureDetector(
-              onTap: () => setState(() => listViewItems.remove(item)),
-              child: Text(item),
-            )).toList()
+            children: [
+              for (int i = 0; i < listViewItems.length; i++)
+                Card(
+                    child: ListTile(
+                      title: Text(listViewItems[i]),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () => _deleteListViewItem(i),
+                      ),
+                    )
+                )
+            ]
         ),
 
         // ================ ListView.separated
         ListView.separated(
           itemBuilder: (_, index) {
-            return GestureDetector(
-              onTap: () => setState(() => listViewSeperatedItems.removeAt(index)),
-              child: Text(listViewSeperatedItems[index]),
+            return Card(
+                child: ListTile(
+                  title: Text(listViewSeperatedItems[index]),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () => _deleteListViewSeperatedItem(index),
+                  ),
+                )
             );
           },
           separatorBuilder: (_, __) => const Divider(),
           itemCount: listViewSeperatedItems.length,
         ),
-
       ][currentPageIndex]
     );
   }
