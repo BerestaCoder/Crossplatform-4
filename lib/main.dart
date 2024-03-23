@@ -16,9 +16,13 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});  final String title;  @override  State<MyHomePage> createState() => _MyHomePageState();}
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  int currentPageIndex = 0;
+
   final columnItems = List.generate(10, (index) => 'Предмет ${index + 1}');
   final listViewItems = List.generate(10, (index) => 'Предмет ${index + 1}');
   final listViewSeperatedItems = List.generate(10, (index) => 'Предмет ${index + 1}');
+
   void _addItem() {
     setState(() {
       switch (currentPageIndex) {
@@ -46,9 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
       listViewSeperatedItems.removeAt(index);
     });
   }
-
-  int currentPageIndex = 0;
-
+  
   @override  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
