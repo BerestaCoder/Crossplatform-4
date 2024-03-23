@@ -16,29 +16,24 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});  final String title;  @override  State<MyHomePage> createState() => _MyHomePageState();}
 
 class _MyHomePageState extends State<MyHomePage> {
-  final columnItems = List.generate(10, (index) => GestureDetector(
-      onTap: () => setState(() => columnItems.remove(index)),
-      child: Text('Предмет ${index + 1}')),
-  );
+  final columnItems = List.generate(10, (index) => 'Предмет ${index + 1}');
   final listViewItems = List.generate(10, (index) => 'Предмет ${index + 1}');
   final listViewSeperatedItems = List.generate(10, (index) => 'Предмет ${index + 1}');
-
-  void remove(int index) {
-    setState(() {
-      columnItems.removeAt(index);
-    });
-  }
-
   void _addItem() {
     setState(() {
       switch (currentPageIndex) {
         case 0:
-          columnItems.add(GestureDetector(child: Text('Добавленный предмет')));
+          columnItems.add('Добавленный предмет');
         case 1:
           listViewItems.add('Добавленный предмет');
         case 2:
           listViewSeperatedItems.add('Добавленный предмет');
       }
+    });
+  }
+  void _deleteColumnItem(int index){
+    setState(() {
+      columnItems.removeAt(index);
     });
   }
 
@@ -74,11 +69,27 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ]
       ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _addItem,
+          tooltip: 'Добавить предмет',
+          child: const Icon(Icons.add),
+        ),
       body: [
 
         // ================ Column
         Column(
-            children: columnItems
+            children: [
+              for (int i = 0; i < columnItems.length; i++)
+                Card(
+                  child: ListTile(
+                    title: Text(columnItems[i]),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () => _deleteColumnItem(i),
+                    ),
+                  )
+                )
+            ]
         ),
 
         // ================ ListView
@@ -102,12 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
           itemCount: listViewSeperatedItems.length,
         ),
 
-      ][currentPageIndex],
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addItem,
-        tooltip: 'Добавить предмет',
-        child: const Icon(Icons.add),
-      ),
+      ][currentPageIndex]
     );
   }
 }
